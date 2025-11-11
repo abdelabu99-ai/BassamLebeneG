@@ -1,0 +1,494 @@
+import { useState } from "react";
+
+export default function App() {
+  const [active, setActive] = useState("home");
+  const [showJoin, setShowJoin] = useState(false);
+  const nav = [
+    { id: "home", label: "Start" },
+    { id: "about", label: "Über uns" },
+    { id: "mission", label: "Mission" },
+    { id: "projects", label: "Projekte" },
+    { id: "join", label: "Mitglied werden" },
+    { id: "blog", label: "Blog" },
+    { id: "contact", label: "Kontakt" },
+  ];
+
+  return (
+    <div className="min-h-screen bg-neutral-50 text-neutral-900">
+      {/* Header */}
+      <header className="sticky top-0 z-40 backdrop-blur bg-white/80 border-b border-neutral-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="h-16 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="h-9 w-9 rounded-xl bg-emerald-600 flex items-center justify-center shadow-lg">
+                <span className="font-bold text-white">B</span>
+              </div>
+              <div className="leading-tight">
+                <p className="font-extrabold tracking-tight">Bassam Leben eG</p>
+                <p className="text-xs text-neutral-500">Genossenschaftlicher Wohnraum in Berlin</p>
+              </div>
+            </div>
+            <nav className="hidden md:flex items-center gap-2">
+              {nav.map((n) => (
+                <button
+                  key={n.id}
+                  className={`px-3 py-2 rounded-xl text-sm font-medium transition hover:bg-neutral-100 ${
+                    active === n.id ? "bg-neutral-900 text-white hover:bg-neutral-900" : "text-neutral-700"
+                  }`}
+                  onClick={() => setActive(n.id === "join" ? (setShowJoin(true), active) : n.id)}
+                >
+                  {n.label}
+                </button>
+              ))}
+              <a
+                href="#impressum"
+                className="px-3 py-2 rounded-xl text-sm font-medium text-neutral-500 hover:text-neutral-900"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActive("legal");
+                }}
+              >
+                Rechtliches
+              </a>
+            </nav>
+            <div className="md:hidden" />
+          </div>
+        </div>
+      </header>
+
+      {/* Hero */}
+      {active === "home" && (
+        <section className="relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(16,185,129,0.15),transparent_40%),radial-gradient(circle_at_80%_0%,rgba(59,130,246,0.14),transparent_35%),radial-gradient(circle_at_50%_100%,rgba(234,179,8,0.12),transparent_35%)]" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 relative">
+            <div className="grid lg:grid-cols-2 gap-10 items-center">
+              <div>
+                <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">
+                  Wohnen mit Würde. Für Berlin. Für alle.
+                </h1>
+                <p className="mt-5 text-lg text-neutral-700 max-w-2xl">
+                  Die Bassam Leben eG schafft bezahlbaren, transparenten und solidarischen Wohnraum. Gegründet im Andenken an Bassam und aus der Überzeugung heraus, dass Wohnen ein Grundrecht ist.
+                </p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <button
+                    onClick={() => setShowJoin(true)}
+                    className="px-5 py-3 rounded-2xl bg-emerald-600 text-white font-semibold shadow hover:bg-emerald-700"
+                  >
+                    Mitglied werden
+                  </button>
+                  <button
+                    onClick={() => setActive("mission")}
+                    className="px-5 py-3 rounded-2xl bg-white border border-neutral-300 font-semibold hover:bg-neutral-100"
+                  >
+                    Unsere Mission
+                  </button>
+                </div>
+                <p className="mt-6 text-sm text-neutral-500">
+                  Hinweis: Wir positionieren uns klar gegen illegale Wohnungsvermittlungen und betrügerische Praktiken. Wir stehen für Recht, Fairness und Gemeinwohl.
+                </p>
+              </div>
+              <div>
+                <div className="relative p-2">
+                  <div className="absolute -inset-4 bg-gradient-to-r from-emerald-200/40 via-sky-200/40 to-amber-200/40 blur-2xl rounded-3xl" />
+                  <div className="relative rounded-3xl p-6 bg-white border shadow-xl">
+                    <div className="grid grid-cols-3 gap-4">
+                      {[
+                        { title: "Bezahlbar", text: "Mitgliederorientierte Mieten statt Renditejagd." },
+                        { title: "Transparent", text: "Klare Prozesse, offene Bücher in der GV." },
+                        { title: "Nachhaltig", text: "Energieeffizient, langlebig, sozial gemischt." },
+                        { title: "Gemeinschaft", text: "Mitbestimmung nach dem Prinzip eine Stimme pro Mitglied." },
+                        { title: "Fair", text: "Keine Provisionen, keine Vorkasse-Deals, keine Tricks." },
+                        { title: "Berlin", text: "Fokus auf Wohnraum in Kiezen der Stadt." },
+                      ].map((c) => (
+                        <div key={c.title} className="rounded-2xl border p-4">
+                          <h3 className="font-semibold">{c.title}</h3>
+                          <p className="text-sm text-neutral-600 mt-1">{c.text}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* About */}
+      {active === "about" && (
+        <Section title="Über uns" eyebrow="Wer wir sind">
+          <p>
+            Die Bassam Leben eG ist eine Wohnungsbaugenossenschaft aus Berlin. Gegründet im Gedenken an Bassam, verbindet sie bautechnische Expertise mit sozialer Verantwortung. Wir handeln langfristig, gemeinwohlorientiert und demokratisch.
+          </p>
+          <List
+            items={[
+              {
+                h: "Rechtsform",
+                p: "Eingetragene Genossenschaft (eG) nach Genossenschaftsgesetz. Ein Mitglied - eine Stimme.",
+              },
+              {
+                h: "Zweck",
+                p: "Schaffung, Erwerb, Sanierung und Bewirtschaftung bezahlbaren Wohnraums für Mitglieder.",
+              },
+              {
+                h: "Werte",
+                p: "Transparenz, Fairness, Nachhaltigkeit, Nachbarschaft, Teilhabe.",
+              },
+            ]}
+          />
+        </Section>
+      )}
+
+      {/* Mission */}
+      {active === "mission" && (
+        <Section title="Unsere Mission" eyebrow="Warum wir handeln">
+          <p className="mb-4">
+            Wir treten an, um Missbrauch am Wohnungsmarkt wirksam zu begegnen. Illegale Vermittlungen, Vorkasse-Fallen und Täuschungen treiben Mieten, verunsichern Familien und zersetzen Vertrauen. Dem setzen wir Gemeinwohl, Rechtssicherheit und solidarische Modelle entgegen.
+          </p>
+          <div className="grid md:grid-cols-3 gap-4">
+            {[
+              {
+                h: "Bezahlbarer Neubau",
+                p: "Planung und Bau energieeffizienter Häuser mit sozialer Bindung und fairen Mieten.",
+              },
+              {
+                h: "Erwerb von Beständen",
+                p: "Kauf und Sanierung von Häusern, um sie langfristig dem Marktstress zu entziehen.",
+              },
+              {
+                h: "Schutz der Mitglieder",
+                p: "Transparente Vergabe, klare Wartelisten, keine Vermittlungsgebühren.",
+              },
+            ].map((c) => (
+              <Card key={c.h} title={c.h} text={c.p} />
+            ))}
+          </div>
+          <Callout />
+        </Section>
+      )}
+
+      {/* Projects */}
+      {active === "projects" && (
+        <Section title="Projekte" eyebrow="Was wir umsetzen">
+          <ProjectList />
+        </Section>
+      )}
+
+      {/* Join */}
+      {active === "join" && (
+        <Section title="Mitglied werden" eyebrow="Teilhabe statt Ohnmacht">
+          <p className="mb-6">
+            Mitglieder zeichnen Geschäftsanteile, bestimmen mit und profitieren von stabilen Mieten. Trage dich unverbindlich ein, wir melden uns mit Details zur Satzung, Anteilszeichnung und Warteliste.
+          </p>
+          <JoinForm onOpenModal={() => setShowJoin(true)} />
+        </Section>
+      )}
+
+      {/* Blog */}
+      {active === "blog" && (
+        <Section title="Blog" eyebrow="Wissen, Einblicke, Haltung">
+          <BlogList />
+        </Section>
+      )}
+
+      {/* Contact */}
+      {active === "contact" && (
+        <Section title="Kontakt" eyebrow="So erreichst du uns">
+          <Contact />
+        </Section>
+      )}
+
+      {/* Legal */}
+      {active === "legal" && (
+        <Section title="Rechtliches" eyebrow="Impressum und Datenschutz">
+          <Legal />
+        </Section>
+      )}
+
+      <Footer onLegal={() => setActive("legal")} onJoin={() => setShowJoin(true)} />
+
+      {/* Join modal */}
+      {showJoin && <JoinModal onClose={() => setShowJoin(false)} />}
+    </div>
+  );
+}
+
+function Section({ title, eyebrow, children }) {
+  return (
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div className="mb-8">
+        <p className="text-sm font-semibold text-emerald-700">{eyebrow}</p>
+        <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">{title}</h2>
+      </div>
+      <div className="prose prose-neutral max-w-none">
+        {children}
+      </div>
+    </section>
+  );
+}
+
+function Card({ title, text }) {
+  return (
+    <div className="border rounded-2xl p-5 bg-white shadow-sm">
+      <h3 className="font-semibold text-lg">{title}</h3>
+      <p className="text-neutral-700 mt-2">{text}</p>
+    </div>
+  );
+}
+
+function List({ items }) {
+  return (
+    <div className="grid md:grid-cols-3 gap-4 mt-6">
+      {items.map((it) => (
+        <div key={it.h} className="border rounded-2xl p-5 bg-white shadow-sm">
+          <h3 className="font-semibold">{it.h}</h3>
+          <p className="text-neutral-700 mt-1">{it.p}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Callout() {
+  return (
+    <div className="mt-8 rounded-3xl border bg-emerald-50 p-6">
+      <h3 className="font-semibold">Klare Haltung gegen illegale Vermittlungen</h3>
+      <p className="text-neutral-800 mt-2">
+        Wir wenden uns entschieden gegen unrechtmäßige Praktiken wie Vorkasse ohne Leistung, Täuschung und Drucksituationen. Anstelle von Eskalation setzen wir auf Aufklärung, Beweise, Kooperation mit Behörden und sichere Vergabeverfahren.
+      </p>
+    </div>
+  );
+}
+
+function ProjectList() {
+  const projects = [
+    {
+      title: "Altbau mit Herz - Sanierung und Sozialbindung",
+      meta: "Berlin Neukölln - 18 WE - geplant",
+      desc: "Erwerb eines Bestandsobjekts, umfassende energetische Sanierung, barrierearme Zugänge, langfristige Sozialbindung.",
+    },
+    {
+      title: "Holz-Hybrid Neubau",
+      meta: "Berlin Lichtenberg - 24 WE - in Vorbereitung",
+      desc: "Klimafreundlicher Neubau KfW-Effizienzhaus, gemeinschaftliche Räume, Dachgarten, Mieterstrommodell.",
+    },
+    {
+      title: "Seniorengerechtes Wohnen",
+      meta: "Berlin Spandau - 16 WE - Konzeptphase",
+      desc: "Kleine barrierefreie Einheiten, Pflegekooperation im Quartier, budgetschonende Grundrisse.",
+    },
+  ];
+  return (
+    <div className="grid md:grid-cols-3 gap-4">
+      {projects.map((p) => (
+        <div key={p.title} className="rounded-2xl border bg-white p-5 shadow-sm">
+          <div className="flex items-center justify-between">
+            <h3 className="font-semibold text-lg">{p.title}</h3>
+            <span className="text-xs px-2 py-1 rounded-full bg-neutral-100 border">{p.meta}</span>
+          </div>
+          <p className="text-neutral-700 mt-3">{p.desc}</p>
+          <button className="mt-4 text-sm font-semibold text-emerald-700 hover:underline">Mehr erfahren</button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function JoinForm({ onOpenModal }) {
+  return (
+    <div className="rounded-2xl border bg-white p-6 shadow-sm">
+      <form className="grid md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium">Vorname</label>
+          <input className="mt-1 w-full rounded-xl border px-3 py-2" placeholder="Dein Vorname" />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Nachname</label>
+          <input className="mt-1 w-full rounded-xl border px-3 py-2" placeholder="Dein Nachname" />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">E-Mail</label>
+          <input type="email" className="mt-1 w-full rounded-xl border px-3 py-2" placeholder="name@mail.de" />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Telefon</label>
+          <input className="mt-1 w-full rounded-xl border px-3 py-2" placeholder="Optional" />
+        </div>
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium">Nachricht</label>
+          <textarea className="mt-1 w-full rounded-xl border px-3 py-2" rows={4} placeholder="Ich möchte Mitglied werden..." />
+        </div>
+      </form>
+      <div className="mt-4 flex flex-wrap gap-3">
+        <button className="px-5 py-3 rounded-2xl bg-emerald-600 text-white font-semibold shadow hover:bg-emerald-700">Unverbindlich anfragen</button>
+        <button onClick={onOpenModal} className="px-5 py-3 rounded-2xl border bg-white font-semibold hover:bg-neutral-100">Informationen zu Anteilen</button>
+      </div>
+      <p className="text-xs text-neutral-500 mt-3">Mit dem Absenden bestätigst du, unsere Datenschutzhinweise gelesen zu haben.</p>
+    </div>
+  );
+}
+
+function BlogList() {
+  const posts = [
+    {
+      title: "Wie Genossenschaften fairen Wohnraum sichern",
+      date: "11. November 2025",
+      tag: "Hintergrund",
+      excerpt:
+        "Was eine eG von einer GmbH unterscheidet, warum Mitgliedschaft schützt und wie Mieten stabil bleiben.",
+    },
+    {
+      title: "Checkliste: So erkennst du illegale Vermittlungsangebote",
+      date: "11. November 2025",
+      tag: "Ratgeber",
+      excerpt:
+        "Von Vorkasse-Fallen bis Identitätsdiebstahl: 9 klare Warnzeichen und wie du sie meldest.",
+    },
+    {
+      title: "Fördermittel in Berlin: IBB, KfW und Erbbaurecht",
+      date: "11. November 2025",
+      tag: "Förderung",
+      excerpt:
+        "Welche Programme passen zu Sanierung und Neubau und welche Pflichten entstehen.",
+    },
+  ];
+  return (
+    <div className="grid md:grid-cols-3 gap-4">
+      {posts.map((p) => (
+        <article key={p.title} className="rounded-2xl border bg-white p-5 shadow-sm">
+          <div className="flex items-center justify-between">
+            <span className="text-xs px-2 py-1 rounded-full bg-neutral-100 border">{p.tag}</span>
+            <time className="text-xs text-neutral-500">{p.date}</time>
+          </div>
+          <h3 className="mt-3 font-semibold text-lg">{p.title}</h3>
+          <p className="mt-2 text-neutral-700">{p.excerpt}</p>
+          <button className="mt-3 text-sm font-semibold text-emerald-700 hover:underline">Weiterlesen</button>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function Contact() {
+  return (
+    <div className="grid md:grid-cols-2 gap-6">
+      <div className="rounded-2xl border bg-white p-6 shadow-sm">
+        <h3 className="font-semibold text-lg">Schreibe uns</h3>
+        <form className="grid gap-4 mt-3">
+          <div>
+            <label className="block text-sm font-medium">E-Mail</label>
+            <input type="email" className="mt-1 w-full rounded-xl border px-3 py-2" placeholder="name@mail.de" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Betreff</label>
+            <input className="mt-1 w-full rounded-xl border px-3 py-2" placeholder="Anfrage" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Nachricht</label>
+            <textarea className="mt-1 w-full rounded-xl border px-3 py-2" rows={5} placeholder="Deine Nachricht" />
+          </div>
+          <button className="px-5 py-3 rounded-2xl bg-neutral-900 text-white font-semibold hover:bg-black">Senden</button>
+          <p className="text-xs text-neutral-500">Wir antworten in der Regel innerhalb von 2 bis 3 Werktagen.</p>
+        </form>
+      </div>
+      <div className="rounded-2xl border bg-white p-6 shadow-sm">
+        <h3 className="font-semibold text-lg">Adresse</h3>
+        <p className="mt-2 text-neutral-700">
+          Bassam Leben eG
+          <br /> Musterstraße 12
+          <br /> 10115 Berlin
+        </p>
+        <h3 className="font-semibold text-lg mt-6">Transparenz</h3>
+        <ul className="mt-2 list-disc list-inside text-neutral-700">
+          <li>Keine Vermittlungsgebühren oder Vorkasse für Wohnungsvergabe.</li>
+          <li>Vergabe nach transparenten Kriterien und Wartelisten.</li>
+          <li>Jährliche Berichte an die Generalversammlung.</li>
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+function Legal() {
+  return (
+    <div className="grid md:grid-cols-2 gap-6">
+      <div className="rounded-2xl border bg-white p-6 shadow-sm" id="impressum">
+        <h3 className="font-semibold text-lg">Impressum</h3>
+        <p className="mt-2 text-neutral-700">
+          Bassam Leben eG - eingetragene Genossenschaft
+          <br /> Vertretungsberechtigter Vorstand: N. N.
+          <br /> Sitz: Berlin - Amtsgericht Charlottenburg, Genossenschaftsregister
+          <br /> Kontakt: info@bassam-leben.de
+        </p>
+        <p className="mt-3 text-neutral-700 text-sm">
+          Inhaltlich Verantwortlicher nach § 18 Abs. 2 MStV: N. N.
+        </p>
+      </div>
+      <div className="rounded-2xl border bg-white p-6 shadow-sm">
+        <h3 className="font-semibold text-lg">Datenschutz</h3>
+        <p className="mt-2 text-neutral-700 text-sm">
+          Wir verarbeiten personenbezogene Daten ausschließlich zur Bearbeitung von Anfragen und zur Mitgliederverwaltung. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b und f DSGVO. Es erfolgt keine Weitergabe an Dritte, außer wenn gesetzlich vorgeschrieben. Du hast jederzeit das Recht auf Auskunft, Berichtigung, Löschung und Widerspruch.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function Footer({ onLegal, onJoin }) {
+  return (
+    <footer className="mt-20 border-t bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="grid md:grid-cols-3 gap-8">
+          <div>
+            <p className="font-extrabold">Bassam Leben eG</p>
+            <p className="text-sm text-neutral-600 mt-2 max-w-sm">
+              Wohnen mit Würde - fair, transparent, nachhaltig. Gemeinsam schaffen wir bezahlbaren Wohnraum in Berlin.
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold">Navigation</p>
+            <ul className="mt-2 space-y-2 text-sm">
+              <li><button className="hover:underline" onClick={() => onJoin()}>Mitglied werden</button></li>
+              <li><button className="hover:underline" onClick={() => onLegal()}>Impressum & Datenschutz</button></li>
+            </ul>
+          </div>
+          <div>
+            <p className="font-semibold">Newsletter</p>
+            <div className="mt-2 flex gap-2">
+              <input className="w-full rounded-xl border px-3 py-2" placeholder="E-Mail" />
+              <button className="px-4 py-2 rounded-xl bg-neutral-900 text-white font-semibold">Anmelden</button>
+            </div>
+            <p className="text-xs text-neutral-500 mt-2">Kein Spam. Abmeldung jederzeit möglich.</p>
+          </div>
+        </div>
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-2 text-xs text-neutral-500">
+          <p>© {new Date().getFullYear()} Bassam Leben eG. Alle Rechte vorbehalten.</p>
+          <p>Made with Rückgrat, Gemeinschaft und Verantwortung.</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+function JoinModal({ onClose }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+      <div className="relative max-w-lg w-full rounded-3xl bg-white p-6 border shadow-2xl">
+        <h3 className="text-xl font-semibold">Mitgliedschaft und Geschäftsanteile</h3>
+        <p className="mt-2 text-neutral-700">
+          Mitglieder zeichnen mindestens einen Geschäftsanteil. Die genaue Höhe wird durch die Satzung festgelegt. Anteile sind grundlegend für den Erwerb und Bau von Wohnungen und stärken die Handlungsfähigkeit der Genossenschaft.
+        </p>
+        <ul className="mt-3 list-disc list-inside text-neutral-700">
+          <li>Ein Mitglied - eine Stimme unabhänging von der Anzahl der Anteile.</li>
+          <li>Rücknahme von Anteilen nach Satzung und gesetzlicher Frist.</li>
+          <li>Keine Vermittlungsprovisionen oder Vorkasse für Wohnungsangebote.</li>
+        </ul>
+        <div className="mt-5 flex justify-end gap-2">
+          <button className="px-4 py-2 rounded-xl border" onClick={onClose}>Schließen</button>
+          <button className="px-4 py-2 rounded-xl bg-emerald-600 text-white font-semibold">Infopaket anfordern</button>
+        </div>
+      </div>
+    </div>
+  );
+}
